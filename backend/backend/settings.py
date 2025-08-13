@@ -92,3 +92,14 @@ FIREBASE_SERVICE_ACCOUNT = os.path.join(BASE_DIR, 'firebase-service-account.json
 if os.path.exists(FIREBASE_SERVICE_ACCOUNT):
     cred = credentials.Certificate(FIREBASE_SERVICE_ACCOUNT)
     firebase_admin.initialize_app(cred)
+
+import firebase_admin
+from firebase_admin import credentials
+
+FIREBASE_SERVICE_ACCOUNT = os.path.join(BASE_DIR, 'firebase-service-account.json')
+if os.path.exists(FIREBASE_SERVICE_ACCOUNT):
+    cred = credentials.Certificate(FIREBASE_SERVICE_ACCOUNT)
+    if not firebase_admin._apps:  # prevents "already initialized" error
+        firebase_admin.initialize_app(cred)
+else:
+    print("⚠️ Firebase service account JSON not found at:", FIREBASE_SERVICE_ACCOUNT)
